@@ -1,5 +1,8 @@
 package com.example.shoppingbackend.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -13,18 +16,22 @@ public class User implements Serializable {
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "用户名")
     private String name;
     /**
      * 邮箱
      */
+    @ApiModelProperty(value = "邮箱")
     private String email;
     /**
      * 电话
      */
+    @ApiModelProperty(value = "电话")
     private Long phone;
     /**
      * 密码
      */
+    @ApiModelProperty(value = "密码")
     private String password;
 
 

@@ -2,13 +2,14 @@ package com.example.shoppingbackend.controller;
 
 import com.example.shoppingbackend.entity.User;
 import com.example.shoppingbackend.service.UserService;
-import org.springframework.data.domain.Page;
+import com.example.shoppingbackend.vo.AjaxResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * (User)表控制层
@@ -33,8 +34,8 @@ public class UserController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<User>> queryByPage(User user, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.userService.queryByPage(user, pageRequest));
+    public ResponseEntity<AjaxResponse> queryByPage(User user, PageRequest pageRequest) {
+        return ResponseEntity.ok(AjaxResponse.success(this.userService.queryByPage(user, pageRequest)));
     }
 
     /**
@@ -42,9 +43,10 @@ public class UserController {
      *
      * @return 查询结果
      */
+    @ApiOperation(value = "查询所有用户")
     @GetMapping("/all")
-    public ResponseEntity<List<User>> queryAll() {
-        return ResponseEntity.ok(this.userService.queryAll());
+    public ResponseEntity<AjaxResponse> queryAll() {
+        return ResponseEntity.ok(AjaxResponse.success(this.userService.queryAll()));
     }
 
     /**
@@ -53,9 +55,10 @@ public class UserController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
-    public ResponseEntity<User> queryById(@PathVariable("id") String id) {
-        return ResponseEntity.ok(this.userService.queryById(id));
+    @ApiOperation(value = "通过主键查询单条用户数据")
+    @GetMapping("/queryById")
+    public ResponseEntity<AjaxResponse> queryById(String id) {
+        return ResponseEntity.ok(AjaxResponse.success(this.userService.queryById(id)));
     }
 
     /**
@@ -64,9 +67,10 @@ public class UserController {
      * @param user 实体
      * @return 新增结果
      */
-    @PostMapping
-    public ResponseEntity<User> add(User user) {
-        return ResponseEntity.ok(this.userService.insert(user));
+    @ApiOperation(value = "新增用户数据")
+    @PostMapping("/add")
+    public ResponseEntity<AjaxResponse> add(User user) {
+        return ResponseEntity.ok(AjaxResponse.success(this.userService.insert(user)));
     }
 
     /**
@@ -75,9 +79,10 @@ public class UserController {
      * @param user 实体
      * @return 编辑结果
      */
-    @PutMapping
-    public ResponseEntity<User> edit(User user) {
-        return ResponseEntity.ok(this.userService.update(user));
+    @ApiOperation(value = "编辑用户数据")
+    @PostMapping("/edit")
+    public ResponseEntity<AjaxResponse> edit(User user) {
+        return ResponseEntity.ok(AjaxResponse.success(this.userService.update(user)));
     }
 
     /**
@@ -86,9 +91,10 @@ public class UserController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(String id) {
-        return ResponseEntity.ok(this.userService.deleteById(id));
+    @ApiOperation(value = "删除用户数据")
+    @GetMapping("/deleteById")
+    public ResponseEntity<AjaxResponse> deleteById(String id) {
+        return ResponseEntity.ok(AjaxResponse.success(this.userService.deleteById(id)));
     }
 
 }

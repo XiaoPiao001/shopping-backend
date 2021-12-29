@@ -66,9 +66,9 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="name" useGeneratedKeys="true">
-        insert into user(email, phone, password)
-        values (#{email}, #{phone}, #{password})
+    <insert id="insert" useGeneratedKeys="true">
+        insert into user(name,email, phone, password)
+        values (#{name},#{email}, #{phone}, #{password})
     </insert>
 
     <insert id="insertBatch" keyProperty="name" useGeneratedKeys="true">
