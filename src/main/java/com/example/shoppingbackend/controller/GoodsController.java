@@ -50,15 +50,19 @@ public class GoodsController {
     }
 
     /**
-     * 通过主键查询单条数据
+     * 查询数据
      *
      * @param id 主键
+     * @param name 名称
      * @return 单条数据
      */
     @ApiOperation(value = "通过主键查询单条商品")
     @GetMapping("/queryById")
-    public ResponseEntity<AjaxResponse> queryById(Integer id) {
-        return ResponseEntity.ok(AjaxResponse.success(this.goodsService.queryById(id)));
+    public ResponseEntity<AjaxResponse> queryById(Integer id,String name) {
+        Goods goods=new Goods();
+        goods.setId(id);
+        goods.setName(name);
+        return ResponseEntity.ok(AjaxResponse.success(this.goodsService.queryByGoods(goods)));
     }
 
     /**
@@ -80,7 +84,7 @@ public class GoodsController {
      * @return 编辑结果
      */
     @ApiOperation(value = "编辑商品")
-    @PutMapping
+    @PostMapping("/edit")
     public ResponseEntity<AjaxResponse> edit(Goods goods) {
         return ResponseEntity.ok(AjaxResponse.success(this.goodsService.update(goods)));
     }
@@ -92,7 +96,7 @@ public class GoodsController {
      * @return 删除是否成功
      */
     @ApiOperation(value = "删除商品")
-    @DeleteMapping
+    @GetMapping("/deleteById")
     public ResponseEntity<AjaxResponse> deleteById(Integer id) {
         return ResponseEntity.ok(AjaxResponse.success(this.goodsService.deleteById(id)));
     }

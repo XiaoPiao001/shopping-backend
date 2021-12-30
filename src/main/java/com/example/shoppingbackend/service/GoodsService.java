@@ -56,4 +56,6 @@ public interface GoodsService {
     boolean deleteById(Integer id);
 
     List<Goods> queryAll();
+
+    List<Goods> queryByGoods(Goods goods);
 }

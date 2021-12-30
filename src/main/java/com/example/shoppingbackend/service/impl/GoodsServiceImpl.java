@@ -85,4 +85,11 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Goods> queryAll() {
         return this.goodsDao.queryAll();
     }
+
+    @Override
+    public List<Goods> queryByGoods(Goods goods) {
+        return this.goodsDao.queryByGoods(goods);
+    }
+
+
 }

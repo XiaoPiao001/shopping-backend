@@ -82,5 +82,13 @@ public interface GoodsDao {
     int deleteById(Integer id);
 
     List<Goods> queryAll();
+
+    /**
+     * 查询指定行数据
+     *
+     * @param goods 查询条件
+     * @return 对象列表
+     */
+    List<Goods> queryByGoods(Goods goods);
 }
 
