@@ -1,7 +1,10 @@
 package com.example.shoppingbackend.controller;
 
 import com.example.shoppingbackend.entity.Goods;
+import com.example.shoppingbackend.entity.Property;
+import com.example.shoppingbackend.exception.CustomError;
 import com.example.shoppingbackend.service.GoodsService;
+import com.example.shoppingbackend.service.PropertyService;
 import com.example.shoppingbackend.vo.AjaxResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
@@ -25,6 +28,9 @@ public class GoodsController {
      */
     @Resource
     private GoodsService goodsService;
+
+    @Resource
+    private PropertyService propertyService;
 
     /**
      * 分页查询
@@ -54,8 +60,7 @@ public class GoodsController {
      *
      * @param id 主键
      * @param name 名称
-     * @return 单条数据
-     */
+       */
     @ApiOperation(value = "通过主键查询单条商品")
     @GetMapping("/queryById")
     public ResponseEntity<AjaxResponse> queryById(Integer id,String name) {
@@ -73,8 +78,16 @@ public class GoodsController {
      */
     @ApiOperation(value = "新增商品")
     @PostMapping
-    public ResponseEntity<AjaxResponse> add(Goods goods) {
-        return ResponseEntity.ok(AjaxResponse.success(this.goodsService.insert(goods)));
+    public ResponseEntity<AjaxResponse> add(Goods goods, Property property) {
+        try {
+            Goods newGoods = this.goodsService.insert(goods);
+            property.setItemId(newGoods.getId());
+            property.setName(newGoods.getName());
+            this.propertyService.insert(property);
+            return ResponseEntity.ok(AjaxResponse.success(true));
+        }catch (CustomError e){
+            return ResponseEntity.ok(AjaxResponse.error(e));
+        }
     }
 
     /**

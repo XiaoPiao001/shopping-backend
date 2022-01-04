@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.shoppingbackend.dao.OrderDao">
+
+    <resultMap type="com.example.shoppingbackend.entity.Order" id="OrderMap">
+        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="INTEGER"/>
+        <result property="orderMoney" column="order_money" jdbcType="NUMERIC"/>
+        <result property="orderState" column="order_state" jdbcType="VARCHAR"/>
+        <result property="orderDate" column="order_date" jdbcType="TIMESTAMP"/>
+        <result property="orderGoods" column="order_goods" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrderMap">
+        select
+          order_num, name, phone, order_money, order_state, order_date, order_goods
+        from shopping.`order`
+        where order_num = #{orderNum}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrderMap">
+        select
+          order_num, name, phone, order_money, order_state, order_date, order_goods
+        from shopping.`order`
+        <where>
+            <if test="orderNum != null">
+                and order_num = #{orderNum}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="orderMoney != null">
+                and order_money = #{orderMoney}
+            </if>
+            <if test="orderState != null and orderState != ''">
+                and order_state = #{orderState}
+            </if>
+            <if test="orderDate != null">
+                and order_date = #{orderDate}
+            </if>
+            <if test="orderGoods != null and orderGoods != ''">
+                and order_goods = #{orderGoods}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    
+    <!--查询指定行数据 不分页-->
+    <select id="queryAll" resultMap="OrderMap">
+        select
+          order_num, name, phone, order_money, order_state, order_date, order_goods
+        from shopping.`order`
+        <where>
+            <if test="orderNum != null">
+                and order_num = #{orderNum}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="orderMoney != null">
+                and order_money = #{orderMoney}
+            </if>
+            <if test="orderState != null and orderState != ''">
+                and order_state = #{orderState}
+            </if>
+            <if test="orderDate != null">
+                and order_date = #{orderDate}
+            </if>
+            <if test="orderGoods != null and orderGoods != ''">
+                and order_goods = #{orderGoods}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from shopping.`order`
+        <where>
+            <if test="orderNum != null">
+                and order_num = #{orderNum}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="orderMoney != null">
+                and order_money = #{orderMoney}
+            </if>
+            <if test="orderState != null and orderState != ''">
+                and order_state = #{orderState}
+            </if>
+            <if test="orderDate != null">
+                and order_date = #{orderDate}
+            </if>
+            <if test="orderGoods != null and orderGoods != ''">
+                and order_goods = #{orderGoods}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderNum" useGeneratedKeys="true">
+        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods)
+        values (#{name}, #{phone}, #{orderMoney}, #{orderState}, #{orderDate}, #{orderGoods})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="orderNum" useGeneratedKeys="true">
+        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.name}, #{entity.phone}, #{entity.orderMoney}, #{entity.orderState}, #{entity.orderDate}, #{entity.orderGoods})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="orderNum" useGeneratedKeys="true">
+        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.phone}, #{entity.orderMoney}, #{entity.orderState}, #{entity.orderDate}, #{entity.orderGoods})
+        </foreach>
+        on duplicate key update
+        name = values(name),
+        phone = values(phone),
+        order_money = values(order_money),
+        order_state = values(order_state),
+        order_date = values(order_date),
+        order_goods = values(order_goods)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update shopping.`order`
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="orderMoney != null">
+                order_money = #{orderMoney},
+            </if>
+            <if test="orderState != null and orderState != ''">
+                order_state = #{orderState},
+            </if>
+            <if test="orderDate != null">
+                order_date = #{orderDate},
+            </if>
+            <if test="orderGoods != null and orderGoods != ''">
+                order_goods = #{orderGoods},
+            </if>
+        </set>
+        where order_num = #{orderNum}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from shopping.`order` where order_num = #{orderNum}
+    </delete>
+
+</mapper>
+

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.shoppingbackend.dao.PropertyDao">
+
+    <resultMap type="com.example.shoppingbackend.entity.Property" id="PropertyMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="itemId" column="item_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="color" column="color" jdbcType="VARCHAR"/>
+        <result property="capacity" column="capacity" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="configure" column="configure" jdbcType="VARCHAR"/>
+        <result property="weight" column="weight" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PropertyMap">
+        select
+          id, item_id, name, type, color, capacity, code, configure, weight
+        from property
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="PropertyMap">
+        select
+          id, item_id, name, type, color, capacity, code, configure, weight
+        from property
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="itemId != null">
+                and item_id = #{itemId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="color != null and color != ''">
+                and color = #{color}
+            </if>
+            <if test="capacity != null and capacity != ''">
+                and capacity = #{capacity}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="configure != null and configure != ''">
+                and configure = #{configure}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from property
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="itemId != null">
+                and item_id = #{itemId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="color != null and color != ''">
+                and color = #{color}
+            </if>
+            <if test="capacity != null and capacity != ''">
+                and capacity = #{capacity}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="configure != null and configure != ''">
+                and configure = #{configure}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+        </where>
+    </select>
+    <select id="queryAll" resultMap="PropertyMap">
+        select
+            id, item_id, name, type, color, capacity, code, configure, weight
+        from property
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into property(item_id, name, type, color, capacity, code, configure, weight)
+        values (#{itemId}, #{name}, #{type}, #{color}, #{capacity}, #{code}, #{configure}, #{weight})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into property(item_id, name, type, color, capacity, code, configure, weight)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.itemId}, #{entity.name}, #{entity.type}, #{entity.color}, #{entity.capacity}, #{entity.code}, #{entity.configure}, #{entity.weight})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into property(item_id, name, type, color, capacity, code, configure, weight)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.itemId}, #{entity.name}, #{entity.type}, #{entity.color}, #{entity.capacity}, #{entity.code}, #{entity.configure}, #{entity.weight})
+        </foreach>
+        on duplicate key update
+        item_id = values(item_id),
+        name = values(name),
+        type = values(type),
+        color = values(color),
+        capacity = values(capacity),
+        code = values(code),
+        configure = values(configure),
+        weight = values(weight)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update property
+        <set>
+            <if test="itemId != null">
+                item_id = #{itemId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="color != null and color != ''">
+                color = #{color},
+            </if>
+            <if test="capacity != null and capacity != ''">
+                capacity = #{capacity},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="configure != null and configure != ''">
+                configure = #{configure},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from property where id = #{id}
+    </delete>
+
+</mapper>
+
