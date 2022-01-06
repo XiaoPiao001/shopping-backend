@@ -58,6 +58,42 @@
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
+    
+    <!--查询指定行数据 不分页-->
+    <select id="queryAll" resultMap="PropertyMap">
+        select
+          id, item_id, name, type, color, capacity, code, configure, weight
+        from property
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="itemId != null">
+                and item_id = #{itemId}
+            </if>
+            <if test="name != null and name != ''">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="color != null and color != ''">
+                and color = #{color}
+            </if>
+            <if test="capacity != null and capacity != ''">
+                and capacity = #{capacity}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="configure != null and configure != ''">
+                and configure = #{configure}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+        </where>
+    </select>
 
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
@@ -92,11 +128,6 @@
                 and weight = #{weight}
             </if>
         </where>
-    </select>
-    <select id="queryAll" resultMap="PropertyMap">
-        select
-            id, item_id, name, type, color, capacity, code, configure, weight
-        from property
     </select>
 
     <!--新增所有列-->

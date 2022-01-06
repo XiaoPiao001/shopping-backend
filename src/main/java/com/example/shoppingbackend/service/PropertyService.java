@@ -3,14 +3,13 @@ package com.example.shoppingbackend.service;
 import com.example.shoppingbackend.entity.Property;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
 import java.util.List;
 
 /**
  * (Property)表服务接口
  *
  * @author makejava
- * @since 2021-12-31 17:08:56
+ * @since 2022-01-04 16:53:54
  */
 public interface PropertyService {
 
@@ -30,6 +29,14 @@ public interface PropertyService {
      * @return 查询结果
      */
     Page<Property> queryByPage(Property property, PageRequest pageRequest);
+
+    /**
+     * 查询指定行数据
+     *
+     * @param property 筛选条件
+     * @return 查询结果
+     */
+    List<Property> queryAll(Property property);
 
     /**
      * 新增数据
@@ -55,5 +62,4 @@ public interface PropertyService {
      */
     boolean deleteById(Integer id);
 
-    List<Property> queryAll();
 }

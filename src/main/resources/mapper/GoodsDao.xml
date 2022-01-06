@@ -17,14 +17,7 @@
         select
           id, name, price, num, product_describe, create_time, update_time
         from goods
-        <where>
-            <if test="id != null">
-                and id = #{param1}
-            </if>
-            <if test="name != null and name != ''">
-                and name like concat('%',#{param2},'%')
-            </if>
-        </where>
+        where id = #{param1}
     </select>
 
     <!--查询指定行数据-->

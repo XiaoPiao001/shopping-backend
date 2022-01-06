@@ -1,7 +1,9 @@
 package com.example.shoppingbackend.service.impl;
 
+import com.example.shoppingbackend.dao.PropertyDao;
 import com.example.shoppingbackend.entity.Goods;
 import com.example.shoppingbackend.dao.GoodsDao;
+import com.example.shoppingbackend.entity.Property;
 import com.example.shoppingbackend.service.GoodsService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,9 @@ import java.util.List;
 public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsDao goodsDao;
+
+    @Resource
+    private PropertyDao propertyDao;
 
     /**
      * 通过ID查询单条数据
@@ -66,6 +71,11 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Goods update(Goods goods) {
+        Property property = new Property();
+        property.setItemId(goods.getId());
+        Property updateProperty=propertyDao.queryAll(property).get(0);
+        updateProperty.setName(goods.getName());
+        this.propertyDao.update(updateProperty);
         this.goodsDao.update(goods);
         return this.queryById(goods.getId());
     }
@@ -78,7 +88,10 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.goodsDao.deleteById(id) > 0;
+        Property property = new Property();
+        property.setItemId(id);
+        Integer propertyId = propertyDao.queryAll(property).get(0).getId();
+        return this.goodsDao.deleteById(id) > 0 && this.propertyDao.deleteById(propertyId) > 0;
     }
 
     @Override

@@ -8,10 +8,10 @@ import java.io.Serializable;
  * (Property)实体类
  *
  * @author makejava
- * @since 2021-12-31 17:08:54
+ * @since 2022-01-04 16:53:53
  */
 public class Property implements Serializable {
-    private static final long serialVersionUID = 751169451605112202L;
+    private static final long serialVersionUID = 908781394982499353L;
     /**
      * 主键
      */

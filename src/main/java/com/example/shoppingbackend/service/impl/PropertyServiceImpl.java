@@ -1,5 +1,7 @@
 package com.example.shoppingbackend.service.impl;
 
+import com.example.shoppingbackend.dao.GoodsDao;
+import com.example.shoppingbackend.entity.Goods;
 import com.example.shoppingbackend.entity.Property;
 import com.example.shoppingbackend.dao.PropertyDao;
 import com.example.shoppingbackend.service.PropertyService;
@@ -15,12 +17,14 @@ import java.util.List;
  * (Property)表服务实现类
  *
  * @author makejava
- * @since 2021-12-31 17:08:56
+ * @since 2022-01-04 16:53:54
  */
 @Service("propertyService")
 public class PropertyServiceImpl implements PropertyService {
     @Resource
     private PropertyDao propertyDao;
+    @Resource
+    private GoodsDao goodsDao;
 
     /**
      * 通过ID查询单条数据
@@ -45,6 +49,17 @@ public class PropertyServiceImpl implements PropertyService {
         long total = this.propertyDao.count(property);
         return new PageImpl<>(this.propertyDao.queryAllByLimit(property, pageRequest), pageRequest, total);
     }
+    
+    /**
+     * 查询指定行数据
+     *
+     * @param property 筛选条件
+     * @return 查询结果
+     */
+    @Override
+    public List<Property> queryAll(Property property) {
+        return this.propertyDao.queryAll(property);
+    }
 
     /**
      * 新增数据
@@ -66,6 +81,10 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public Property update(Property property) {
+        Property updateProperty = this.propertyDao.queryById(property.getId());
+        Goods goods=this.goodsDao.queryById(updateProperty.getItemId());
+        goods.setName(property.getName());
+        this.goodsDao.update(goods);
         this.propertyDao.update(property);
         return this.queryById(property.getId());
     }
@@ -78,11 +97,7 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.propertyDao.deleteById(id) > 0;
-    }
-
-    @Override
-    public List<Property> queryAll() {
-        return this.propertyDao.queryAll();
+        Property property=this.queryById(id);
+        return this.propertyDao.deleteById(id) > 0 && goodsDao.deleteById(property.getItemId()) > 0;
     }
 }

@@ -10,12 +10,13 @@
         <result property="orderState" column="order_state" jdbcType="VARCHAR"/>
         <result property="orderDate" column="order_date" jdbcType="TIMESTAMP"/>
         <result property="orderGoods" column="order_goods" jdbcType="VARCHAR"/>
+        <result property="orderAddress" column="order_address" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="OrderMap">
         select
-          order_num, name, phone, order_money, order_state, order_date, order_goods
+          order_num, name, phone, order_money, order_state, order_date, order_goods, order_address
         from shopping.`order`
         where order_num = #{orderNum}
     </select>
@@ -23,7 +24,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="OrderMap">
         select
-          order_num, name, phone, order_money, order_state, order_date, order_goods
+          order_num, name, phone, order_money, order_state, order_date, order_goods, order_address
         from shopping.`order`
         <where>
             <if test="orderNum != null">
@@ -46,6 +47,9 @@
             </if>
             <if test="orderGoods != null and orderGoods != ''">
                 and order_goods = #{orderGoods}
+            </if>
+            <if test="orderAddress != null and orderAddress != ''">
+                and order_address = #{orderAddress}
             </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
@@ -54,7 +58,7 @@
     <!--查询指定行数据 不分页-->
     <select id="queryAll" resultMap="OrderMap">
         select
-          order_num, name, phone, order_money, order_state, order_date, order_goods
+          order_num, name, phone, order_money, order_state, order_date, order_goods, order_address
         from shopping.`order`
         <where>
             <if test="orderNum != null">
@@ -77,6 +81,9 @@
             </if>
             <if test="orderGoods != null and orderGoods != ''">
                 and order_goods = #{orderGoods}
+            </if>
+            <if test="orderAddress != null and orderAddress != ''">
+                and order_address = #{orderAddress}
             </if>
         </where>
     </select>
@@ -107,28 +114,31 @@
             <if test="orderGoods != null and orderGoods != ''">
                 and order_goods = #{orderGoods}
             </if>
+            <if test="orderAddress != null and orderAddress != ''">
+                and order_address = #{orderAddress}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderNum" useGeneratedKeys="true">
-        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods)
-        values (#{name}, #{phone}, #{orderMoney}, #{orderState}, #{orderDate}, #{orderGoods})
+        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods, order_address)
+        values (#{name}, #{phone}, #{orderMoney}, #{orderState}, #{orderDate}, #{orderGoods}, #{orderAddress})
     </insert>
 
     <insert id="insertBatch" keyProperty="orderNum" useGeneratedKeys="true">
-        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods)
+        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods, order_address)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.name}, #{entity.phone}, #{entity.orderMoney}, #{entity.orderState}, #{entity.orderDate}, #{entity.orderGoods})
+        (#{entity.name}, #{entity.phone}, #{entity.orderMoney}, #{entity.orderState}, #{entity.orderDate}, #{entity.orderGoods}, #{entity.orderAddress})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="orderNum" useGeneratedKeys="true">
-        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods)
+        insert into shopping.`order`(name, phone, order_money, order_state, order_date, order_goods, order_address)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.name}, #{entity.phone}, #{entity.orderMoney}, #{entity.orderState}, #{entity.orderDate}, #{entity.orderGoods})
+            (#{entity.name}, #{entity.phone}, #{entity.orderMoney}, #{entity.orderState}, #{entity.orderDate}, #{entity.orderGoods}, #{entity.orderAddress})
         </foreach>
         on duplicate key update
         name = values(name),
@@ -136,7 +146,8 @@
         order_money = values(order_money),
         order_state = values(order_state),
         order_date = values(order_date),
-        order_goods = values(order_goods)
+        order_goods = values(order_goods),
+        order_address = values(order_address)
     </insert>
 
     <!--通过主键修改数据-->
@@ -160,6 +171,9 @@
             </if>
             <if test="orderGoods != null and orderGoods != ''">
                 order_goods = #{orderGoods},
+            </if>
+            <if test="orderAddress != null and orderAddress != ''">
+                order_address = #{orderAddress},
             </if>
         </set>
         where order_num = #{orderNum}

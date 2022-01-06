@@ -10,7 +10,7 @@ import java.util.List;
  * (Property)表数据库访问层
  *
  * @author makejava
- * @since 2021-12-31 17:08:53
+ * @since 2022-01-04 16:53:53
  */
 @Mapper
 public interface PropertyDao {
@@ -31,6 +31,14 @@ public interface PropertyDao {
      * @return 对象列表
      */
     List<Property> queryAllByLimit(Property property, @Param("pageable") Pageable pageable);
+
+    /**
+     * 查询指定行数据 不分页
+     *
+     * @param property 查询条件
+     * @return 对象列表
+     */
+    List<Property> queryAll(Property property);
 
     /**
      * 统计总行数
@@ -81,6 +89,5 @@ public interface PropertyDao {
      */
     int deleteById(Integer id);
 
-    List<Property> queryAll();
 }
 
