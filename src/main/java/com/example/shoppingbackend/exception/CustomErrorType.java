@@ -7,7 +7,8 @@ public enum CustomErrorType {
     ACCOUNT_ERROR(600,"账户异常"),
     FILE_MAX_ERROR(505,"文件超出指定大小"),
     PAGE_NOT_FOUND_ERROR(404,"无法找到对应的资源"),
-    SIGNATURE_ERROR(700,"签名异常");
+    SIGNATURE_ERROR(700,"签名异常"),
+    LOGIN_ERROR(401,"登陆失败，用户名或密码错误");
     CustomErrorType(int code, String typeDesc) {
         this.code = code;
         this.typeDesc = typeDesc;
