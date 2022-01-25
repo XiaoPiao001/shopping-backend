@@ -2,6 +2,8 @@ package com.example.shoppingbackend.controller;
 
 import com.example.shoppingbackend.entity.Resource;
 import com.example.shoppingbackend.service.ResourceService;
+import com.example.shoppingbackend.vo.AjaxResponse;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +45,8 @@ public class ResourceController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<Resource>> queryAll(Resource resource) {
-        return ResponseEntity.ok(this.resourceService.queryAll(resource));
+    public ResponseEntity<AjaxResponse> queryAll(Resource resource) {
+        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.queryAll(resource)));
     }
 
     /**
@@ -54,8 +56,8 @@ public class ResourceController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<Resource> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.resourceService.queryById(id));
+    public ResponseEntity<AjaxResponse> queryById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.queryById(id)));
     }
 
     /**
@@ -65,8 +67,8 @@ public class ResourceController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Resource> add(Resource resource) {
-        return ResponseEntity.ok(this.resourceService.insert(resource));
+    public ResponseEntity<AjaxResponse> add(Resource resource) {
+        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.insert(resource)));
     }
 
     /**
@@ -76,8 +78,8 @@ public class ResourceController {
      * @return 编辑结果
      */
     @PostMapping("/edit")
-    public ResponseEntity<Resource> edit(Resource resource) {
-        return ResponseEntity.ok(this.resourceService.update(resource));
+    public ResponseEntity<AjaxResponse> edit(Resource resource) {
+        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.update(resource)));
     }
 
     /**
@@ -87,9 +89,21 @@ public class ResourceController {
      * @return 删除是否成功
      */
     @PostMapping("/deleteById")
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.resourceService.deleteById(id));
+    public ResponseEntity<AjaxResponse> deleteById(Integer id) {
+        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.deleteById(id)));
     }
 
+    /**
+     * 通过角色查询权益
+     *
+     * @param id 角色id
+     * @param type 权益类型
+     * @return 权益列表
+     */
+    @ApiOperation("通过角色查询权益")
+    @GetMapping("/role")
+    public ResponseEntity<AjaxResponse> getResourceByRole(@PathVariable("id") Integer id, @PathVariable("type") String type) {
+        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.getResourceByRole(id,type)));
+    }
 }
 

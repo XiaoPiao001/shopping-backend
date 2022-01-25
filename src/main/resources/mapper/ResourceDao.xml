@@ -12,8 +12,11 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="ResourceMap">
-        select
-          resource_id, resource_code, resource_name, resource_type, list_hide
+        select resource_id,
+               resource_code,
+               resource_name,
+               resource_type,
+               list_hide
         from resource
         where resource_id = #{resourceId}
     </select>
@@ -21,7 +24,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ResourceMap">
         select
-          resource_id, resource_code, resource_name, resource_type, list_hide
+        resource_id, resource_code, resource_name, resource_type, list_hide
         from resource
         <where>
             <if test="resourceId != null">
@@ -42,11 +45,11 @@
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
     </select>
-    
+
     <!--查询指定行数据 不分页-->
     <select id="queryAll" resultMap="ResourceMap">
         select
-          resource_id, resource_code, resource_name, resource_type, list_hide
+        resource_id, resource_code, resource_name, resource_type, list_hide
         from resource
         <where>
             <if test="resourceId != null">
@@ -90,6 +93,18 @@
         </where>
     </select>
 
+    <!--根据角色查询权限-->
+    <select id="getResourceByRole" resultMap="ResourceMap">
+        SELECT rs.*
+        FROM role_resource rrs
+                 LEFT JOIN
+             resource rs on rrs.resource_id = rs.resource_id
+                 LEFT JOIN
+             role r on rrs.role_id = r.role_id
+        WHERE r.role_id = #{param1}
+          AND rs.resource_type = #{param2}
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="resourceId" useGeneratedKeys="true">
         insert into resource(resource_code, resource_name, resource_type, list_hide)
@@ -100,7 +115,7 @@
         insert into resource(resource_code, resource_name, resource_type, list_hide)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.resourceCode}, #{entity.resourceName}, #{entity.resourceType}, #{entity.listHide})
+            (#{entity.resourceCode}, #{entity.resourceName}, #{entity.resourceType}, #{entity.listHide})
         </foreach>
     </insert>
 
@@ -139,7 +154,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from resource where resource_id = #{resourceId}
+        delete
+        from resource
+        where resource_id = #{resourceId}
     </delete>
 
 </mapper>

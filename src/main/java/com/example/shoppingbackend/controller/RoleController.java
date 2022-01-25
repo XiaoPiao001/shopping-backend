@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * (Role)表控制层
@@ -45,9 +44,10 @@ public class RoleController {
      * @param role 筛选条件
      * @return 查询结果
      */
+    @ApiOperation("查询指定行数据")
     @GetMapping
-    public ResponseEntity<List<Role>> queryAll(Role role) {
-        return ResponseEntity.ok(this.roleService.queryAll(role));
+    public ResponseEntity<AjaxResponse> queryAll(Role role) {
+        return ResponseEntity.ok(AjaxResponse.success(this.roleService.queryAll(role)));
     }
 
     /**
@@ -68,8 +68,8 @@ public class RoleController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Role> add(Role role) {
-        return ResponseEntity.ok(this.roleService.insert(role));
+    public ResponseEntity<AjaxResponse> add(Role role) {
+        return ResponseEntity.ok(AjaxResponse.success(this.roleService.insert(role)));
     }
 
     /**
@@ -91,8 +91,8 @@ public class RoleController {
      * @return 删除是否成功
      */
     @PostMapping("/deleteById")
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.roleService.deleteById(id));
+    public ResponseEntity<AjaxResponse> deleteById(Integer id) {
+        return ResponseEntity.ok(AjaxResponse.success(this.roleService.deleteById(id)));
     }
 
 }

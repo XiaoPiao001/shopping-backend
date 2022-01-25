@@ -24,8 +24,8 @@ public interface ResourceService {
     /**
      * 分页查询
      *
-     * @param resource 筛选条件
-     * @param pageRequest      分页对象
+     * @param resource    筛选条件
+     * @param pageRequest 分页对象
      * @return 查询结果
      */
     Page<Resource> queryByPage(Resource resource, PageRequest pageRequest);
@@ -62,4 +62,11 @@ public interface ResourceService {
      */
     boolean deleteById(Integer resourceId);
 
+    /**
+     * 根据角色查询权限
+     * @param roleId
+     * @param type
+     * @return
+     */
+    List<Resource> getResourceByRole(Integer roleId, String type);
 }

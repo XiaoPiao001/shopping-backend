@@ -89,4 +89,9 @@ public class ResourceServiceImpl implements ResourceService {
     public boolean deleteById(Integer resourceId) {
         return this.resourceDao.deleteById(resourceId) > 0;
     }
+
+    @Override
+    public List<Resource> getResourceByRole(Integer roleId, String type) {
+        return this.resourceDao.getResourceByRole(roleId,type);
+    }
 }
