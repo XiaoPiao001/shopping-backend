@@ -50,7 +50,7 @@
              role_resource rrs on rrs.role_id = ar.role_id
                  LEFT JOIN
              resource rs on rrs.resource_id = rs.resource_id
-        WHERE a.id = #{id}
+        WHERE a.id = #{id} and r.status = 1
     </select>
 
     <!--登录-->
@@ -121,6 +121,17 @@
                 and password = #{password}
             </if>
         </where>
+    </select>
+
+    <!--根据角色查询该角色下的管理员-->
+    <select id="getAdminByRole" resultMap="AdminMap">
+        SELECT a.*
+        FROM admin_role ar
+                 LEFT JOIN
+             admin a on ar.admin_id = a.id
+                 LEFT JOIN
+             role r on ar.role_id = r.role_id
+        WHERE r.role_id = #{RoleId}
     </select>
 
     <!--新增所有列-->

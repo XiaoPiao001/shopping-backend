@@ -4,6 +4,7 @@ import com.example.shoppingbackend.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 /**
@@ -26,8 +27,8 @@ public interface RoleDao {
     /**
      * 查询指定行数据
      *
-     * @param role 查询条件
-     * @param pageable         分页对象
+     * @param role     查询条件
+     * @param pageable 分页对象
      * @return 对象列表
      */
     List<Role> queryAllByLimit(Role role, @Param("pageable") Pageable pageable);
@@ -88,6 +89,24 @@ public interface RoleDao {
      * @return 影响行数
      */
     int deleteById(Integer roleId);
+
+    /**
+     * 赋予管理员角色
+     *
+     * @param roleId
+     * @param adminIdList
+     * @return
+     */
+    int endueRole(@Param("roleId") Integer roleId, @Param("adminIdList") List<Integer> adminIdList);
+
+    /**
+     * 废除管理员角色
+     *
+     * @param roleId
+     * @param adminIdList
+     * @return
+     */
+    int repealRole(@Param("roleId") Integer roleId, @Param("adminIdList") String adminIdList);
 
 }
 

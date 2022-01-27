@@ -1,6 +1,8 @@
 package com.example.shoppingbackend.service;
 
 import com.example.shoppingbackend.entity.Role;
+import com.example.shoppingbackend.vo.AjaxResponse;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import java.util.List;
@@ -44,7 +46,7 @@ public interface RoleService {
      * @param role 实例对象
      * @return 实例对象
      */
-    Role insert(Role role);
+    AjaxResponse insert(Role role);
 
     /**
      * 修改数据
@@ -52,7 +54,7 @@ public interface RoleService {
      * @param role 实例对象
      * @return 实例对象
      */
-    Role update(Role role);
+    AjaxResponse update(Role role);
 
     /**
      * 通过主键删除数据
@@ -62,4 +64,19 @@ public interface RoleService {
      */
     boolean deleteById(Integer roleId);
 
+    /**
+     * 赋予管理员角色
+     * @param roleId
+     * @param adminIdList
+     * @return
+     */
+    AjaxResponse endueRole(@Param("roleId") Integer roleId, @Param("adminIdList") List<Integer> adminIdList);
+
+    /**
+     * 废除管理员角色
+     * @param roleId
+     * @param adminIdList
+     * @return
+     */
+    AjaxResponse repealRole(@Param("roleId") Integer roleId, @Param("adminIdList") List<Integer> adminIdList);
 }

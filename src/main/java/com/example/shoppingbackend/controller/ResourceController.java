@@ -4,12 +4,11 @@ import com.example.shoppingbackend.entity.Resource;
 import com.example.shoppingbackend.service.ResourceService;
 import com.example.shoppingbackend.vo.AjaxResponse;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * (Resource)表控制层
@@ -23,7 +22,7 @@ public class ResourceController {
     /**
      * 服务对象
      */
-
+    @javax.annotation.Resource
     private ResourceService resourceService;
 
     /**
@@ -94,16 +93,29 @@ public class ResourceController {
     }
 
     /**
-     * 通过角色查询权益
+     * 通过角色查询资源
      *
-     * @param id 角色id
-     * @param type 权益类型
-     * @return 权益列表
+     * @param roleId 角色id
+     * @return 资源列表
      */
-    @ApiOperation("通过角色查询权益")
-    @GetMapping("/role")
-    public ResponseEntity<AjaxResponse> getResourceByRole(@PathVariable("id") Integer id, @PathVariable("type") String type) {
-        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.getResourceByRole(id,type)));
+    @ApiOperation("通过角色查询资源")
+    @GetMapping("/getResourceByRole")
+    public ResponseEntity<AjaxResponse> getResourceByRole(Integer roleId) {
+        return ResponseEntity.ok(AjaxResponse.success(this.resourceService.getResourceByRole(roleId)));
+    }
+
+    /**
+     * 启用或禁用角色的资源
+     *
+     * @param roleId 角色ID
+     * @param resourceId 资源ID
+     * @param state 0禁用 1启用
+     * @return 资源列表
+     */
+    @ApiOperation("启用或禁用角色的资源")
+    @GetMapping("/roleResourceState")
+    public ResponseEntity<AjaxResponse> roleResourceState(Integer roleId,Integer resourceId,Integer state) {
+        return ResponseEntity.ok(this.resourceService.roleResourceState(roleId,resourceId,state));
     }
 }
 

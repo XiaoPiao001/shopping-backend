@@ -72,4 +72,11 @@ public interface AdminService {
      * @return
      */
     AjaxResponse login(Admin admin);
+
+    /**
+     * 根据角色查询该角色下的管理员
+     * @param roleId
+     * @return
+     */
+    AjaxResponse getAdminByRole(Integer roleId);
 }

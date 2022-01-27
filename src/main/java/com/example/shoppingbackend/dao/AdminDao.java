@@ -104,5 +104,12 @@ public interface AdminDao {
      * @return
      */
     RoleVO getRoleVOByAdmin(Admin admin);
+
+    /**
+     * 根据角色查询该角色下的管理员
+     * @param roleId
+     * @return
+     */
+    List<Admin> getAdminByRole(Integer roleId);
 }
 

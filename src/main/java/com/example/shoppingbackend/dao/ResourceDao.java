@@ -90,11 +90,26 @@ public interface ResourceDao {
     int deleteById(Integer resourceId);
 
     /**
-     * 根据角色查询权限
+     * 根据角色查询资源
      * @param roleId
-     * @param type
      * @return
      */
-    List<Resource> getResourceByRole(Integer roleId, String type);
+    List<Resource> getResourceByRole(@Param("roleId")Integer roleId);
+
+    /**
+     * 启用角色资源
+     * @param roleId
+     * @param resourceId
+     * @return
+     */
+    int endueResource(@Param("roleId") Integer roleId, @Param("resourceId") Integer resourceId);
+
+    /**
+     * 禁用角色资源
+     * @param roleId
+     * @param resourceId
+     * @return
+     */
+    int repealResource(@Param("roleId") Integer roleId, @Param("resourceId") Integer resourceId);
 }
 

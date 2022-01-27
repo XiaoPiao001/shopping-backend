@@ -3,6 +3,7 @@ package com.example.shoppingbackend.service.impl;
 import com.example.shoppingbackend.entity.Resource;
 import com.example.shoppingbackend.dao.ResourceDao;
 import com.example.shoppingbackend.service.ResourceService;
+import com.example.shoppingbackend.vo.AjaxResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @Service("resourceService")
 public class ResourceServiceImpl implements ResourceService {
+    @javax.annotation.Resource
     private ResourceDao resourceDao;
 
     /**
@@ -90,8 +92,30 @@ public class ResourceServiceImpl implements ResourceService {
         return this.resourceDao.deleteById(resourceId) > 0;
     }
 
+    /**
+     * 根据角色查询资源
+     * @param roleId
+     * @return
+     */
     @Override
-    public List<Resource> getResourceByRole(Integer roleId, String type) {
-        return this.resourceDao.getResourceByRole(roleId,type);
+    public List<Resource> getResourceByRole(Integer roleId) {
+        return this.resourceDao.getResourceByRole(roleId);
+    }
+
+    /**
+     * 启用或禁用角色的资源
+     * @param roleId
+     * @param resourceId
+     * @param state 0禁用 1启用
+     * @return
+     */
+    @Override
+    public AjaxResponse roleResourceState(Integer roleId, Integer resourceId, Integer state) {
+        //禁用角色资源
+        if(state == 0){
+            return AjaxResponse.success(this.resourceDao.repealResource(roleId,resourceId)>0);
+        }
+        //启用角色资源
+        return AjaxResponse.success(this.resourceDao.endueResource(roleId,resourceId)>0);
     }
 }

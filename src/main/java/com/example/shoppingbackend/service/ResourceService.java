@@ -1,6 +1,7 @@
 package com.example.shoppingbackend.service;
 
 import com.example.shoppingbackend.entity.Resource;
+import com.example.shoppingbackend.vo.AjaxResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import java.util.List;
@@ -63,10 +64,19 @@ public interface ResourceService {
     boolean deleteById(Integer resourceId);
 
     /**
-     * 根据角色查询权限
+     * 根据角色查询资源
      * @param roleId
      * @param type
      * @return
      */
-    List<Resource> getResourceByRole(Integer roleId, String type);
+    List<Resource> getResourceByRole(Integer roleId);
+
+    /**
+     * 启用或禁用角色的资源
+     * @param roleId
+     * @param resourceId
+     * @param state
+     * @return
+     */
+    AjaxResponse roleResourceState(Integer roleId,Integer resourceId,Integer state);
 }

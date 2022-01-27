@@ -3,13 +3,14 @@ package com.example.shoppingbackend.controller;
 import com.example.shoppingbackend.entity.Role;
 import com.example.shoppingbackend.service.RoleService;
 import com.example.shoppingbackend.vo.AjaxResponse;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Role)表控制层
@@ -56,6 +57,7 @@ public class RoleController {
      * @param id 主键
      * @return 单条数据
      */
+    @ApiOperation("通过主键查询单条数据")
     @GetMapping("{id}")
     public ResponseEntity<Role> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.roleService.queryById(id));
@@ -67,9 +69,10 @@ public class RoleController {
      * @param role 实体
      * @return 新增结果
      */
+    @ApiOperation("新增数据")
     @PostMapping
     public ResponseEntity<AjaxResponse> add(Role role) {
-        return ResponseEntity.ok(AjaxResponse.success(this.roleService.insert(role)));
+        return ResponseEntity.ok(this.roleService.insert(role));
     }
 
     /**
@@ -81,7 +84,7 @@ public class RoleController {
     @ApiOperation(value = "编辑角色")
     @PostMapping("/edit")
     public ResponseEntity<AjaxResponse> edit(Role role) {
-        return ResponseEntity.ok(AjaxResponse.success(this.roleService.update(role)));
+        return ResponseEntity.ok(this.roleService.update(role));
     }
 
     /**
@@ -90,10 +93,36 @@ public class RoleController {
      * @param id 主键
      * @return 删除是否成功
      */
+    @ApiOperation(value = "删除数据")
     @PostMapping("/deleteById")
     public ResponseEntity<AjaxResponse> deleteById(Integer id) {
         return ResponseEntity.ok(AjaxResponse.success(this.roleService.deleteById(id)));
     }
 
+    /**
+     * 赋予管理员角色
+     *
+     * @param roleId
+     * @param adminIdList
+     * @return 删除是否成功
+     */
+    @ApiOperation(value = "赋予管理员角色")
+    @PostMapping("/endueRole")
+    public ResponseEntity<AjaxResponse> endueRole(Integer roleId,@RequestParam(value="adminIdList") List<Integer> adminIdList) {
+        return ResponseEntity.ok(this.roleService.endueRole(roleId,adminIdList));
+    }
+
+    /**
+     * 废除管理员角色
+     *
+     * @param roleId
+     * @param adminIdList
+     * @return 删除是否成功
+     */
+    @ApiOperation(value = "废除管理员角色")
+    @PostMapping("/repealRole")
+    public ResponseEntity<AjaxResponse> repealRole(Integer roleId,@RequestParam(value="adminIdList") List<Integer> adminIdList) {
+        return ResponseEntity.ok(this.roleService.repealRole(roleId,adminIdList));
+    }
 }
 

@@ -1,5 +1,8 @@
 package com.example.shoppingbackend.exception;
 
+/**
+ * @author lenovo
+ */
 public enum CustomErrorType {
     USER_INPUT_ERROR(400,"用户输入异常"),
     SYSTEM_ERROR (500,"系统服务异常"),
@@ -8,7 +11,11 @@ public enum CustomErrorType {
     FILE_MAX_ERROR(505,"文件超出指定大小"),
     PAGE_NOT_FOUND_ERROR(404,"无法找到对应的资源"),
     SIGNATURE_ERROR(700,"签名异常"),
-    LOGIN_ERROR(401,"登陆失败，用户名或密码错误");
+    LOGIN_ERROR(401,"登陆失败，用户名或密码错误"),
+    ADDROLE_ERROR(402,"新增角色失败，该角色已存在"),
+    UPDATEROLE_ERROR(402,"编辑角色失败，该角色已存在"),
+    ENDUERESOURCE_ERROR(403,"赋予管理员角色失败，系统异常"),
+    REPEALROLE_ERROR(403,"废除管理员角色，系统异常");
     CustomErrorType(int code, String typeDesc) {
         this.code = code;
         this.typeDesc = typeDesc;

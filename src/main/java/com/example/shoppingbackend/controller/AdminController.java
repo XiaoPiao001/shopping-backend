@@ -27,12 +27,6 @@ public class AdminController {
     @Resource
     private AdminService adminService;
 
-    @PostMapping("/login")
-    @ApiOperation(value = "登录")
-    public ResponseEntity<AjaxResponse> queryByPage(Admin admin) {
-        return ResponseEntity.ok(this.adminService.login(admin));
-    }
-
     /**
      * 分页查询
      *
@@ -52,8 +46,8 @@ public class AdminController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<List<Admin>> queryAll(Admin admin) {
-        return ResponseEntity.ok(this.adminService.queryAll(admin));
+    public ResponseEntity<AjaxResponse> queryAll(Admin admin) {
+        return ResponseEntity.ok(AjaxResponse.success(this.adminService.queryAll(admin)));
     }
 
     /**
@@ -100,5 +94,27 @@ public class AdminController {
         return ResponseEntity.ok(this.adminService.deleteById(id));
     }
 
+    /**
+     * 登录
+     * @param admin
+     * @return
+     */
+    @PostMapping("/login")
+    @ApiOperation(value = "登录")
+    public ResponseEntity<AjaxResponse> queryByPage(Admin admin) {
+        return ResponseEntity.ok(this.adminService.login(admin));
+    }
+
+    /**
+     * 查询某角色下的管理员
+     *
+     * @param roleId 角色主键
+     * @return
+     */
+    @ApiOperation(value = "查询某角色下的管理员")
+    @GetMapping("/getAdminByRole")
+    public ResponseEntity<AjaxResponse> getAdminByRole(Integer roleId) {
+        return ResponseEntity.ok(this.adminService.getAdminByRole(roleId));
+    }
 }
 

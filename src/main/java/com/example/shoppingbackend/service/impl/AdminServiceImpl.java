@@ -110,4 +110,9 @@ public class AdminServiceImpl implements AdminService {
         AdminVO adminVO = adminDao.login(adminTo.get(0));
         return AjaxResponse.success(adminVO);
     }
+
+    @Override
+    public AjaxResponse getAdminByRole(Integer roleId) {
+        return AjaxResponse.success(this.adminDao.getAdminByRole(roleId));
+    }
 }
