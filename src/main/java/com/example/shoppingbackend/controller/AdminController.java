@@ -3,6 +3,7 @@ package com.example.shoppingbackend.controller;
 import com.example.shoppingbackend.entity.Admin;
 import com.example.shoppingbackend.service.AdminService;
 import com.example.shoppingbackend.vo.AjaxResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * (Admin)表控制层
@@ -18,6 +18,7 @@ import java.util.List;
  * @author makejava
  * @since 2022-01-21 16:38:01
  */
+@Api(tags = {"管理员"})
 @RestController
 @RequestMapping("admin")
 public class AdminController {

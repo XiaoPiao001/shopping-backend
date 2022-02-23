@@ -28,6 +28,7 @@ public class AjaxResponse {
         AjaxResponse resultBean = new AjaxResponse();
         resultBean.setSuccess(false);
         resultBean.setCode(e.getCode());
+        resultBean.setData(e);
         if(e.getCode() == CustomErrorType.USER_INPUT_ERROR.getCode()){
             resultBean.setMessage(e.getCodeType());
         }else if(e.getCode() == CustomErrorType.SYSTEM_ERROR.getCode()){

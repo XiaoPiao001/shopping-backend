@@ -3,6 +3,7 @@ package com.example.shoppingbackend.controller;
 import com.example.shoppingbackend.entity.Order;
 import com.example.shoppingbackend.service.OrderService;
 import com.example.shoppingbackend.vo.AjaxResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author makejava
  * @since 2022-01-04 14:56:51
  */
+@Api(tags = {"订单"})
 @RestController
 @RequestMapping("order")
 public class OrderController {

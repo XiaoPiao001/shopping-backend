@@ -15,7 +15,9 @@ public enum CustomErrorType {
     ADDROLE_ERROR(402,"新增角色失败，该角色已存在"),
     UPDATEROLE_ERROR(402,"编辑角色失败，该角色已存在"),
     ENDUERESOURCE_ERROR(403,"赋予管理员角色失败，系统异常"),
-    REPEALROLE_ERROR(403,"废除管理员角色，系统异常");
+    REPEALROLE_ERROR(403,"废除管理员角色，系统异常"),
+    NULLTOKEN_ERROR(501,"请求失败，token为空"),
+    OUTTIEMTOKEN_ERROR(502,"token过期，请重新登录");
     CustomErrorType(int code, String typeDesc) {
         this.code = code;
         this.typeDesc = typeDesc;

@@ -3,6 +3,7 @@ package com.example.shoppingbackend.controller;
 import com.example.shoppingbackend.entity.Property;
 import com.example.shoppingbackend.service.PropertyService;
 import com.example.shoppingbackend.vo.AjaxResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author makejava
  * @since 2022-01-04 16:53:50
  */
+@Api(tags = {"商品数据"})
 @RestController
 @RequestMapping("property")
 public class PropertyController {

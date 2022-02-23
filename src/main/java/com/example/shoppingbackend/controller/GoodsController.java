@@ -6,6 +6,7 @@ import com.example.shoppingbackend.exception.CustomError;
 import com.example.shoppingbackend.service.GoodsService;
 import com.example.shoppingbackend.service.PropertyService;
 import com.example.shoppingbackend.vo.AjaxResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
  * @author makejava
  * @since 2021-12-29 19:12:39
  */
+@Api(tags = {"商品"})
 @RestController
 @RequestMapping("goods")
 public class GoodsController {

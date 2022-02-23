@@ -5,8 +5,11 @@ import com.example.shoppingbackend.entity.Admin;
 import com.example.shoppingbackend.exception.CustomError;
 import com.example.shoppingbackend.exception.CustomErrorType;
 import com.example.shoppingbackend.service.AdminService;
+import com.example.shoppingbackend.util.JwtTokenUtil;
 import com.example.shoppingbackend.vo.AdminVO;
 import com.example.shoppingbackend.vo.AjaxResponse;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +29,8 @@ public class AdminServiceImpl implements AdminService {
     @Resource
     private AdminDao adminDao;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
     /**
      * 通过ID查询单条数据
      *
@@ -104,10 +109,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AjaxResponse login(Admin admin) {
         List<Admin> adminTo = adminDao.queryAll(admin);
-        if (adminTo.isEmpty()){
+        if (adminTo.isEmpty() || StringUtils.isEmpty(admin.getAdminName()) || StringUtils.isEmpty(admin.getPassword())){
             return AjaxResponse.error(new CustomError(CustomErrorType.LOGIN_ERROR,"用户名或密码错误"));
         }
         AdminVO adminVO = adminDao.login(adminTo.get(0));
+        String token=jwtTokenUtil.generateToken(admin.getAdminName(),admin.getId()+"");
+        adminVO.setToken(token);
+        adminVO.setValidate(true);
         return AjaxResponse.success(adminVO);
     }
 

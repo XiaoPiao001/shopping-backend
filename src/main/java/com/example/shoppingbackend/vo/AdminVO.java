@@ -8,6 +8,8 @@ import lombok.Data;
  */
 @Data
 public class AdminVO {
+    private String token;
+    private boolean isValidate;
     /**
      * 管理员id
      */

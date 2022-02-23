@@ -3,8 +3,8 @@ package com.example.shoppingbackend.controller;
 import com.example.shoppingbackend.entity.Resource;
 import com.example.shoppingbackend.service.ResourceService;
 import com.example.shoppingbackend.vo.AjaxResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author makejava
  * @since 2022-01-21 16:38:01
  */
+@Api(tags = {"资源"})
 @RestController
 @RequestMapping("resource")
 public class ResourceController {

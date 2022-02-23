@@ -78,8 +78,9 @@ jwt:
   # 密匙KEY
   secret: JwtSecret
   # HeaderKEY
-  header: JWTDemo
+  header: token
   # 过期时间(这里设定为豪秒)
-  expire: 21600000
-
+  expire:  36000000
+swagger:
+  enabled: true
 

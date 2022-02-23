@@ -2,10 +2,12 @@ package com.example.shoppingbackend.controller;
 
 import com.example.shoppingbackend.entity.Role;
 import com.example.shoppingbackend.service.RoleService;
+import com.example.shoppingbackend.vo.AdminQueryVO;
 import com.example.shoppingbackend.vo.AjaxResponse;
 import io.swagger.annotations.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
  * @author makejava
  * @since 2022-01-21 16:38:02
  */
+@Api(tags = {"角色"})
 @RestController
 @RequestMapping("role")
 public class RoleController {
@@ -102,27 +105,25 @@ public class RoleController {
     /**
      * 赋予管理员角色
      *
-     * @param roleId
-     * @param adminIdList
+     * @param adminQueryVO
      * @return 删除是否成功
      */
     @ApiOperation(value = "赋予管理员角色")
     @PostMapping("/endueRole")
-    public ResponseEntity<AjaxResponse> endueRole(Integer roleId,@RequestParam(value="adminIdList") List<Integer> adminIdList) {
-        return ResponseEntity.ok(this.roleService.endueRole(roleId,adminIdList));
+    public ResponseEntity<AjaxResponse> endueRole(@RequestBody AdminQueryVO adminQueryVO) {
+        return ResponseEntity.ok(this.roleService.endueRole(adminQueryVO.getRoleId(),adminQueryVO.getAdminIdList()));
     }
 
     /**
      * 废除管理员角色
      *
-     * @param roleId
-     * @param adminIdList
+     * @param adminQueryVO
      * @return 删除是否成功
      */
     @ApiOperation(value = "废除管理员角色")
     @PostMapping("/repealRole")
-    public ResponseEntity<AjaxResponse> repealRole(Integer roleId,@RequestParam(value="adminIdList") List<Integer> adminIdList) {
-        return ResponseEntity.ok(this.roleService.repealRole(roleId,adminIdList));
+    public ResponseEntity<AjaxResponse> repealRole(@RequestBody AdminQueryVO adminQueryVO) {
+        return ResponseEntity.ok(this.roleService.repealRole(adminQueryVO.getRoleId(),adminQueryVO.getAdminIdList()));
     }
 }
 

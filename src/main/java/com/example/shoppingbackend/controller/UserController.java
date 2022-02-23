@@ -17,6 +17,7 @@ import javax.annotation.Resource;
  * @author makejava
  * @since 2021-12-28 15:30:28
  */
+@Api(tags = {"用户"})
 @RestController
 @RequestMapping("user")
 public class UserController {
