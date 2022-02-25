@@ -6,6 +6,8 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="adminName" column="admin_name" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap type="com.example.shoppingbackend.vo.AdminVO" id="AdminVO">
@@ -64,7 +66,9 @@
     <select id="queryById" resultMap="AdminMap">
         select id,
                admin_name,
-               password
+               password,
+               email,
+               phone
         from shopping.admin
         where id = #{id}
     </select>
@@ -72,7 +76,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="AdminMap">
         select
-        id, admin_name, password
+        id, admin_name, password,email,phone
         from shopping.admin
         <where>
             <if test="id != null">
@@ -91,7 +95,7 @@
     <!--查询指定行数据 不分页-->
     <select id="queryAll" resultMap="AdminMap">
         select
-        id, admin_name, password
+        id, admin_name, password,email,phone
         from shopping.admin
         <where>
             <if test="id != null">
@@ -136,23 +140,23 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into shopping.admin(admin_name, password)
-        values (#{adminName}, #{password})
+        insert into shopping.admin(admin_name, password,email,phone)
+        values (#{adminName}, #{password},#{email},#{phone})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into shopping.admin(admin_name, password)
+        insert into shopping.admin(admin_name, password,email,phone)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.adminName}, #{entity.password})
+            (#{entity.adminName}, #{entity.password},#{entity.email},#{entity.phone})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into shopping.admin(admin_name, password)
+        insert into shopping.admin(admin_name, password,email,phone)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.adminName}, #{entity.password})
+            (#{entity.adminName}, #{entity.password},#{entity.email},#{entity.phone})
         </foreach>
         on duplicate key update
         admin_name = values(admin_name),
@@ -168,6 +172,12 @@
             </if>
             <if test="password != null and password != ''">
                 password = #{password},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone}
             </if>
         </set>
         where id = #{id}

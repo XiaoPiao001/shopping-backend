@@ -1,6 +1,7 @@
 package com.example.shoppingbackend.entity;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2022-01-21 16:38:01
  */
+@Data
 public class Admin implements Serializable {
     private static final long serialVersionUID = -96145308034296333L;
     /**
@@ -27,31 +29,15 @@ public class Admin implements Serializable {
      */
     @ApiModelProperty("管理员密码")
     private String password;
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getAdminName() {
-        return adminName;
-    }
-
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    /**
+     * 邮箱
+     */
+    @ApiModelProperty(value = "邮箱")
+    private String email;
+    /**
+     * 电话
+     */
+    @ApiModelProperty(value = "电话")
+    private Long phone;
 }
 
