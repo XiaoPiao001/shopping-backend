@@ -46,8 +46,8 @@ public class AdminController {
      * @param admin 筛选条件
      * @return 查询结果
      */
-    @ApiOperation(value = "查询指定行数据")
     @GetMapping
+    @ApiOperation(value = "查询指定行数据")
     public ResponseEntity<AjaxResponse> queryAll(Admin admin) {
         return ResponseEntity.ok(AjaxResponse.success(this.adminService.queryAll(admin)));
     }
@@ -58,8 +58,8 @@ public class AdminController {
      * @param id 主键
      * @return 单条数据
      */
-    @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("{id}")
+    @ApiOperation(value = "通过主键查询单条数据")
     public ResponseEntity<Admin> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.adminService.queryById(id));
     }
@@ -72,8 +72,8 @@ public class AdminController {
      */
     @ApiOperation(value = "新增数据")
     @PostMapping
-    public ResponseEntity<Admin> add(Admin admin) {
-        return ResponseEntity.ok(this.adminService.insert(admin));
+    public ResponseEntity<AjaxResponse> add(@RequestBody Admin admin) {
+        return ResponseEntity.ok(AjaxResponse.success(this.adminService.insert(admin)));
     }
 
     /**
@@ -84,8 +84,8 @@ public class AdminController {
      */
     @ApiOperation(value = "编辑数据")
     @PostMapping("/edit")
-    public ResponseEntity<Admin> edit(Admin admin) {
-        return ResponseEntity.ok(this.adminService.update(admin));
+    public ResponseEntity<AjaxResponse> edit(@RequestBody Admin admin) {
+        return ResponseEntity.ok(AjaxResponse.success(this.adminService.update(admin)));
     }
 
     /**
@@ -96,8 +96,8 @@ public class AdminController {
      */
     @ApiOperation(value = "删除数据")
     @PostMapping("/deleteById")
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.adminService.deleteById(id));
+    public ResponseEntity<AjaxResponse> deleteById(Integer id) {
+        return ResponseEntity.ok(AjaxResponse.success(this.adminService.deleteById(id)));
     }
 
     /**

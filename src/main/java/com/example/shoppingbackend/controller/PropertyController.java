@@ -73,7 +73,7 @@ public class PropertyController {
      */
     @ApiOperation(value = "新增商品数据")
     @PostMapping
-    public ResponseEntity<AjaxResponse> add(Property property) {
+    public ResponseEntity<AjaxResponse> add(@RequestBody Property property) {
         return ResponseEntity.ok(AjaxResponse.success(this.propertyService.insert(property)));
     }
 
@@ -85,7 +85,7 @@ public class PropertyController {
      */
     @ApiOperation(value = "编辑商品数据")
     @PostMapping("/edit")
-    public ResponseEntity<AjaxResponse> edit(Property property) {
+    public ResponseEntity<AjaxResponse> edit(@RequestBody Property property) {
         return ResponseEntity.ok(AjaxResponse.success(this.propertyService.update(property)));
     }
 

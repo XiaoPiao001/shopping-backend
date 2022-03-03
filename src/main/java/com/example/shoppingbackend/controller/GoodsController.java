@@ -1,6 +1,7 @@
 package com.example.shoppingbackend.controller;
 
 import com.example.shoppingbackend.entity.Goods;
+import com.example.shoppingbackend.entity.GoodsProperty;
 import com.example.shoppingbackend.entity.Property;
 import com.example.shoppingbackend.exception.CustomError;
 import com.example.shoppingbackend.service.GoodsService;
@@ -8,8 +9,8 @@ import com.example.shoppingbackend.service.PropertyService;
 import com.example.shoppingbackend.vo.AjaxResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,8 @@ public class GoodsController {
     /**
      * 分页查询
      *
-     * @param goods 筛选条件
-     * @param pageRequest      分页对象
+     * @param goods       筛选条件
+     * @param pageRequest 分页对象
      * @return 查询结果
      */
     @GetMapping
@@ -60,13 +61,13 @@ public class GoodsController {
     /**
      * 查询数据
      *
-     * @param id 主键
+     * @param id   主键
      * @param name 名称
-       */
+     */
     @ApiOperation(value = "通过主键查询单条商品")
     @GetMapping("/queryById")
-    public ResponseEntity<AjaxResponse> queryById(Integer id,String name) {
-        Goods goods=new Goods();
+    public ResponseEntity<AjaxResponse> queryById(Integer id, String name) {
+        Goods goods = new Goods();
         goods.setId(id);
         goods.setName(name);
         return ResponseEntity.ok(AjaxResponse.success(this.goodsService.queryByGoods(goods)));
@@ -75,19 +76,21 @@ public class GoodsController {
     /**
      * 新增数据
      *
-     * @param goods 实体
+     * @param goodsProperty 实体
      * @return 新增结果
      */
     @ApiOperation(value = "新增商品")
     @PostMapping
-    public ResponseEntity<AjaxResponse> add(Goods goods, Property property) {
+    public ResponseEntity<AjaxResponse> add(@RequestBody GoodsProperty goodsProperty) {
         try {
+            Goods goods = goodsProperty.getGoods();
+            Property property = goodsProperty.getProperty();
             Goods newGoods = this.goodsService.insert(goods);
             property.setItemId(newGoods.getId());
             property.setName(newGoods.getName());
             this.propertyService.insert(property);
             return ResponseEntity.ok(AjaxResponse.success(true));
-        }catch (CustomError e){
+        } catch (CustomError e) {
             return ResponseEntity.ok(AjaxResponse.error(e));
         }
     }
@@ -100,7 +103,7 @@ public class GoodsController {
      */
     @ApiOperation(value = "编辑商品")
     @PostMapping("/edit")
-    public ResponseEntity<AjaxResponse> edit(Goods goods) {
+    public ResponseEntity<AjaxResponse> edit(@RequestBody Goods goods) {
         return ResponseEntity.ok(AjaxResponse.success(this.goodsService.update(goods)));
     }
 

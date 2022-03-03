@@ -73,7 +73,7 @@ public class OrderController {
      */
     @ApiOperation(value = "新增订单")
     @PostMapping
-    public ResponseEntity<AjaxResponse> add(Order order) {
+    public ResponseEntity<AjaxResponse> add(@RequestBody Order order) {
         return ResponseEntity.ok(AjaxResponse.success(this.orderService.insert(order)));
     }
 
@@ -85,7 +85,7 @@ public class OrderController {
      */
     @ApiOperation(value = "编辑订单")
     @PostMapping("/edit")
-    public ResponseEntity<AjaxResponse> edit(Order order) {
+    public ResponseEntity<AjaxResponse> edit(@RequestBody Order order) {
         return ResponseEntity.ok(AjaxResponse.success(this.orderService.update(order)));
     }
 

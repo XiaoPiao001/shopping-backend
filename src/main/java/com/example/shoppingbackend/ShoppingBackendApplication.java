@@ -9,8 +9,9 @@ import org.springframework.cache.annotation.EnableCaching;
 public class ShoppingBackendApplication {
 
     public static void main(String[] args) {
-        System.out.println("=====SHOPPING=====");
+        System.out.println("=====SHOPPING STATIC=====");
         SpringApplication.run(ShoppingBackendApplication.class, args);
+        System.out.println("=====SHOPPING FINALLY!!!=====");
     }
 
 }

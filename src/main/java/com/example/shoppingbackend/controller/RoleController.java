@@ -74,7 +74,7 @@ public class RoleController {
      */
     @ApiOperation("新增数据")
     @PostMapping
-    public ResponseEntity<AjaxResponse> add(Role role) {
+    public ResponseEntity<AjaxResponse> add(@RequestBody Role role) {
         return ResponseEntity.ok(this.roleService.insert(role));
     }
 
@@ -86,7 +86,7 @@ public class RoleController {
      */
     @ApiOperation(value = "编辑角色")
     @PostMapping("/edit")
-    public ResponseEntity<AjaxResponse> edit(Role role) {
+    public ResponseEntity<AjaxResponse> edit(@RequestBody Role role) {
         return ResponseEntity.ok(this.roleService.update(role));
     }
 

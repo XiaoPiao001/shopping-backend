@@ -67,7 +67,7 @@ public class ResourceController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<AjaxResponse> add(Resource resource) {
+    public ResponseEntity<AjaxResponse> add(@RequestBody Resource resource) {
         return ResponseEntity.ok(AjaxResponse.success(this.resourceService.insert(resource)));
     }
 
@@ -78,7 +78,7 @@ public class ResourceController {
      * @return 编辑结果
      */
     @PostMapping("/edit")
-    public ResponseEntity<AjaxResponse> edit(Resource resource) {
+    public ResponseEntity<AjaxResponse> edit(@RequestBody Resource resource) {
         return ResponseEntity.ok(AjaxResponse.success(this.resourceService.update(resource)));
     }
 
